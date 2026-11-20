@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Total Rewards · HR Work Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>:root{color-scheme:light;padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif;background:#F5F7F9}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="app-warm.css">
+</head><body class="tapage">
+
+
+<div class="wrap page">
+  <header>
+    <p class="crumb"><a href="index.html">&larr; All processes</a></p>
+    <p class="eyebrow">Process 5 of 8</p>
+    <h1>Total Rewards</h1>
+    <p class="lead">How much of total rewards could AI take on, and where should you start? Label each task, add your hours, and watch the result.</p>
+    <p class="scopeline">Pay, benefits and payroll, and helping people understand what they receive.</p>
+    <button type="button" class="startbtn" id="startBtn">Start with Set the rewards approach</button>
+    <ul id="world" hidden></ul>
+  </header>
+
+  <section class="howto" aria-labelledby="h-how">
+    <h2 id="h-how">How to use this</h2>
+    <ol class="how3">
+      <li><b>Label each task</b><span>Open an activity. For each task, pick Human-led, Augment, Automate or Create. A bold square box marks a task where your choice differs from our starting view.</span></li>
+      <li><b>Check the weights</b><span>Each task has a % share of its activity's time. We start with a guess. Change it to fit your team.</span></li>
+      <li><b>Add the hours</b><span>Picture one full-time person in this area. We start at about 40 hours a week. Change any number and every total follows. Use Ignore it for activities your process does not have.</span></li>
+      <li><b>Read the verdict</b><span>The verdict at the bottom combines your labels, weights and hours to show where to start.</span></li>
+    </ol>
+  </section>
+  <section class="howto" aria-label="Rules by country"><details class="fold" id="countryFold" open><summary>Rules differ by country: examples from the United States and India</summary><div class="tgrid" style="margin-top:10px"><div class="term"><dt>United States</dt><dd>Employer health insurance and 401(k) retirement plans are common. Overtime follows federal and state wage rules. Some states require pay ranges in job ads or pay data reports. Leave rules include federal and state laws. Payroll tax is federal, state and sometimes local.</dd></div><div class="term"><dt>India</dt><dd>Provident fund (EPF) and gratuity are common statutory benefits. Pay is often shown as CTC, split into parts with different tax treatment. Group health cover is a common benefit. Rules come from central and state law, and the new labour codes are being brought in, so check what applies now. Payroll deductions include tax at source.</dd></div></div><p class="hint">These are starting pointers for comparing the two, not legal advice. Find the equivalent rules for your own country. Rules change and vary by state and company size, so check the current text.</p></details></section>
+</div>
+
+
+<div class="wrap page" style="padding-top: 24px;">
+  <section class="zone z2" aria-labelledby="h-list">
+    <p class="ztag"><i>1</i>Your activities</p>
+    <div class="dive">
+      <b>Ready to explore? Dive in.</b>
+      <span>Open a stage below, choose who does each task, and watch the numbers move.</span>
+    </div>
+
+    <div class="twocol"><div class="maincol">
+    <div class="listhead">
+      <div><h2 id="h-list">Total Rewards activities</h2><p class="hint">Open "Activity details" to pick who does each task.</p><p class="hint" id="saveNote">Your changes are saved automatically.</p></div>
+      <div class="lbtn"><button type="button" class="btn" id="toggleAll">Open all</button><button type="button" class="btn" id="toggleWhy">Hide reasons</button><button type="button" class="btn" id="reset">Reset to starting view</button></div>
+    </div>
+    <div class="key" role="group" aria-label="Colour key">
+      <details class="fold" id="resFold"><summary>How each activity gets its result</summary>
+        <p class="defq">Each activity gets one result: the choice that covers most of its time. AI helps with every task that is not Human-led.</p>
+      </details>
+    </div>
+    <div class="list" id="list"></div>
+    </div>
+    <aside class="sidecol" aria-label="Quick guide">
+      <div class="sidecard"><h3>The four labels</h3>
+        <ul class="lkey">
+          <li class="lk-human"><b><i class="dot human"></i>Human-led</b>People do it. AI helps at most in the background.</li>
+          <li class="lk-augment"><b><i class="dot augment"></i>Augment</b>AI prepares, a person decides.</li>
+          <li class="lk-automate"><b><i class="dot automate"></i>Automate</b>A workflow does it, a person spot-checks.</li>
+          <li class="lk-create"><b><i class="dot create"></i>Create</b>New things AI makes possible.</li>
+        </ul>
+        <p><a href="#verdict">Jump to the verdict</a></p>
+      </div>
+    </aside>
+    </div>
+  </section>
+
+
+  <section class="verdict" id="verdict" aria-labelledby="h-verdict">
+    <p class="ztag"><i>2</i>Verdict</p>
+    <h2 id="h-verdict" class="vlabel">Our verdict on total rewards</h2><div class="xrow"><button type="button" id="xlsBtn" class="xbtn" hidden>Download as Excel</button><span class="xnote" id="xlsNote" role="status"></span></div>
+    <div class="hero">
+      <div class="hbig" aria-hidden="true"><b id="hN">0%</b><span>of the time has AI involved</span><i id="hHrs"></i></div>
+      <div class="htext">
+        <p class="vtop" id="vTop"></p>
+        <p class="vband" id="vBand"></p>
+        <p class="vsub" id="vSub"></p>
+      </div>
+      <div class="hstats" id="hStats"></div>
+      <p class="dnote" id="dNote" hidden></p>
+      <p class="dnote" id="offNote" hidden></p>
+    </div>
+        <div class="advwrap">
+<div class="advbars"><div class="advrow"><span>Your choices</span><div class="flat small" id="advYou" role="img" aria-label="Your choices"></div></div><div class="advrow"><span>Our starting view</span><div class="flat small" id="advRec" role="img" aria-label="Our starting view"></div></div></div>
+    <ul class="advkey" aria-label="Colour key for the bars"><li class="akt">Share of time:</li><li><i class="dot human"></i>Human-led</li><li><i class="dot augment"></i>Augment</li><li><i class="dot automate"></i>Automate</li><li><i class="dot create"></i>Create</li></ul>
+    <p class="pnote advnote"><b>What is our starting view?</b> Our own view of each task, with the reasoning shown under it. It is a place to check, not measured data. Your choice may differ because of your organisation's own practice. Where it does, a bold square box on each task marks our starting view.</p>
+    </div>
+    <details class="fold"><summary>How this is calculated</summary>    <p class="how">AI helps with every task you do not pick as Human-led. An activity's hours are shared across its tasks by weights. We set the starting weights by hand, and you can change them. Tasks you add yourself all count the same. The big percentage is the share of time with AI involved. Each of the four boxes shows that label's share of the time, with the time itself and the number of tasks underneath. The same percentage is used on every process, so they can be compared. A tie goes to Human-led. Activities you ignore are not counted anywhere. It counts time, not job numbers. The hours are starting guesses for a general HR professional, not industry figures. Time spent checking AI's work is not taken off, so read the AI hours as a best case. A small change to a weight can move a result a little.</p></details>
+    <p class="caution"><b>A caution.</b> This is how it looks today. It comes from a first view of each activity and the linked sources, not from measuring your own process. Treat the task choices and hours as opinions to test. Before relying on any of it, try a small trial, check results for fairness across groups, tell the people affected when AI is used, and confirm local law. Ask a few of the people affected, and their managers, what they would change before you rely on any of this. This is not legal advice.</p>
+    <details class="fold" id="lawFold"><summary>Before using AI with people</summary><ol class="lawl"><li><b>Talk to your lawyer.</b></li><li><b>Check local data protection rules.</b> Many places ask for extra care with sensitive personal data.</li><li><b>Check local rules on AI in employment.</b> Some places treat AI used for hiring, pay, promotion or ending work as high-risk, or require bias audits and notices to people.</li><li><b>Ask your tool providers.</b> How do they test for bias, and what data do they keep?</li></ol><p class="hint">These are pointers, not legal advice. Rules change, so check the current text.</p></details>
+  </section>
+
+  <section class="hrt zone z4" aria-labelledby="h-hrt">
+    <p class="ztag"><i>3</i>HR Tech</p>
+    <div class="hrt-head">
+      <h2 id="h-hrt">HR Tech reshaping these areas</h2>
+      <p>Tap an area to see its products.</p>
+    </div>
+    <div class="tabs" role="group" aria-label="Filter HR tech">
+      <button type="button" class="chip" data-f="all" aria-pressed="true">All</button>
+      <button type="button" class="chip" data-f="Global" aria-pressed="false">Global</button>
+      <button type="button" class="chip" data-f="Regional" aria-pressed="false">India</button>
+    </div>
+    <div class="tfbar" id="tfBar" hidden></div>
+    <ul class="buckets" id="orgs"></ul>
+    <p class="hint" id="orgCount"></p>
+  </section>
+
+  <section class="zone z5" aria-label="Good to know: common HR terms">
+    <p class="ztag"><i>4</i>Good to know</p>
+    <details class="fold">
+      <summary>Common HR terms</summary>
+      <dl class="tgrid" id="terms"></dl>
+    </details>
+  </section>
+
+  <footer class="lifenav"><p class="crumb"><a href="index.html">&larr; All processes</a></p></footer>
+
+</div>
+<script src="data-total-rewards.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="engine.js"></script>
+</body></html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI in HR Challenge</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #F2EFE9; --surface: #FFFFFF; --surface-2: #ECE7DD; --line: #E4DDD0;
+  --ink: #262B3B; --muted: #5C6675; --terra: #CC4E24; --terra-soft: #F7E4D8;
+  --flag: #D94452; --flag-soft: #FCEAEC; --flag-ink: #9B1B2A;
+  --human: #7B6B8A; --augment: #2A7F8A; --automate: #3B5998; --create: #B8860B;
+  --human-soft: #F0ECF3; --augment-soft: #E6F3F5; --automate-soft: #E8EDF5; --create-soft: #FFF6E0;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --shadow: 0 1px 2px rgb(26 30 54 / .06), 0 6px 18px rgb(26 30 54 / .05);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1A1E2E; --surface: #242838; --surface-2: #2E3248; --line: #3A3E52;
+  --ink: #E0E4EE; --muted: #8A90A0; --terra: #E9A07F; --terra-soft: #3A2A25;
+  --flag: #F27A84; --flag-soft: #3A2225; --flag-ink: #F5B0B6;
+  --human-soft: #2E2838; --augment-soft: #1E3338; --automate-soft: #1E2838; --create-soft: #38301E;
+  --shadow: none; color-scheme: dark;
+}}
+:root[data-theme="dark"] {
+  --bg: #1A1E2E; --surface: #242838; --surface-2: #2E3248; --line: #3A3E52;
+  --ink: #E0E4EE; --muted: #8A90A0; --terra: #E9A07F; --terra-soft: #3A2A25;
+  --flag: #F27A84; --flag-soft: #3A2225; --flag-ink: #F5B0B6;
+  --human-soft: #2E2838; --augment-soft: #1E3338; --automate-soft: #1E2838; --create-soft: #38301E;
+  --shadow: none; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.5; }
+.wrap { max-width: 720px; margin: 0 auto; }
+h1 { font-family: var(--font-display); font-size: 1.8rem; margin: 0 0 4px; }
+h2 { font-family: var(--font-display); font-size: 1.3rem; margin: 0 0 8px; }
+.eyebrow { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terra); margin-bottom: 4px; }
+.sub { color: var(--muted); margin: 0 0 24px; }
+
+/* Progress bar */
+.prog { display: flex; gap: 4px; margin-bottom: 24px; }
+.prog span { flex: 1; height: 6px; border-radius: 3px; background: var(--line); transition: background 0.3s; }
+.prog span.done { background: var(--terra); }
+.prog span.now { background: var(--terra); opacity: 0.5; }
+
+/* Card */
+.card { background: var(--surface); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px; }
+.scenario { font-size: 1.05rem; margin: 0 0 6px; font-weight: 600; }
+.context { color: var(--muted); font-size: 0.92rem; margin: 0 0 20px; }
+
+/* Choices */
+.choices { display: grid; gap: 10px; margin-bottom: 20px; }
+.choice { border: 2px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; display: grid; gap: 2px; transition: border-color 0.2s, background 0.2s; }
+.choice:hover { border-color: var(--muted); }
+.choice b { font-size: 0.95rem; }
+.choice span { font-size: 0.833rem; color: var(--muted); }
+.choice.picked { border-color: var(--terra); background: var(--terra-soft); }
+.choice.correct { border-color: var(--augment); background: var(--augment-soft); }
+.choice.wrong { border-color: var(--flag); background: var(--flag-soft); }
+.choice[disabled] { cursor: default; opacity: 0.7; }
+.choice.picked[disabled], .choice.correct[disabled], .choice.wrong[disabled] { opacity: 1; }
+
+/* Feedback */
+.feedback { display: none; padding: 16px; border-radius: 12px; margin-bottom: 16px; }
+.feedback.show { display: block; }
+.fb-great { background: var(--augment-soft); border-left: 4px solid var(--augment); }
+.fb-close { background: var(--create-soft); border-left: 4px solid var(--create); }
+.fb-miss { background: var(--flag-soft); border-left: 4px solid var(--flag); }
+.feedback h3 { margin: 0 0 4px; font-family: var(--font-display); font-size: 1rem; }
+.feedback p { margin: 0; font-size: 0.92rem; }
+.flag-note { margin-top: 8px; padding: 8px 12px; border-radius: 8px; background: var(--flag-soft); color: var(--flag-ink); font-size: 0.833rem; font-weight: 600; }
+
+/* Button */
+.btn { display: inline-block; padding: 10px 24px; border: none; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer; font-size: 0.95rem; }
+.btn-next { background: var(--terra); color: #fff; }
+.btn-next:hover { opacity: 0.9; }
+.btn-start { background: var(--terra); color: #fff; font-size: 1.1rem; padding: 14px 32px; }
+
+/* Score */
+.score-card { text-align: center; }
+.big-score { font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: var(--terra); }
+.score-label { font-size: 1.1rem; color: var(--muted); margin-bottom: 16px; }
+.score-breakdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; text-align: center; }
+.sb-item { padding: 12px; border-radius: 12px; background: var(--surface-2); }
+.sb-item b { display: block; font-size: 1.5rem; font-family: var(--font-display); }
+.sb-item span { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.verdict { font-size: 1rem; margin: 16px 0; padding: 16px; border-radius: 12px; background: var(--surface-2); }
+
+/* Intro */
+.intro { text-align: center; padding: 40px 0; }
+.intro p { max-width: 480px; margin: 12px auto 24px; color: var(--muted); }
+.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 24px 0; text-align: center; }
+.how-item { padding: 16px 12px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+.how-item .emoji { font-size: 1.8rem; margin-bottom: 6px; }
+.how-item b { display: block; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+var SCENARIOS = [
+  {
+    activity: "Screen applications against must-haves",
+    context: "You have 200 applications for a software engineer role. The must-haves are clear: 3+ years of experience, a specific programming language, and the right to work. Someone needs to sort through them.",
+    correct: "augment",
+    flag: ["chances"],
+    reason: "It can sort people out before a person has looked at them.",
+    explain: "AI can sort fast, but rejecting someone is a big call. The flag-and-cap rule holds this at Augment because it meets the test for chances — who moves forward. AI sorts and suggests; a person checks every reject.",
+    tasks: ["Match applications to the must-have list", "Flag gaps or inconsistencies for a recruiter", "Recommend a shortlist with reasons", "A recruiter reviews every rejection"]
+  },
+  {
+    activity: "Decide who to hire and negotiate the offer",
+    context: "Three candidates have made it to the final round. All are qualified. You need to pick one and negotiate salary, start date, and benefits.",
+    correct: "human",
+    flag: ["chances", "pay"],
+    reason: "It decides who gets the job and what they are paid.",
+    explain: "This is about as human as it gets. AI can organise the evidence and bring pay data, but the decision and the conversation stay with people. Two flags: chances (who gets the job) and pay (what they're offered).",
+    tasks: ["Gather interview feedback and assessment scores", "Compare candidates against criteria", "The hiring panel decides", "A person negotiates terms face to face"]
+  },
+  {
+    activity: "Schedule interviews",
+    context: "Five candidates need interviews with a three-person panel across two time zones. You need to find slots, send invites, and handle reschedules.",
+    correct: "automate",
+    flag: null,
+    reason: null,
+    explain: "No flag here — scheduling doesn't affect who moves forward, what they're paid, or their personal data. It's routine coordination that workflows handle well. People handle special requests.",
+    tasks: ["Check panel availability", "Propose time slots to candidates", "Send calendar invites and reminders", "Handle reschedule requests"]
+  },
+  {
+    activity: "Interview and talk with candidates",
+    context: "It's interview day. A candidate is sitting across from you (or on a video call). The conversation needs to assess skills, culture fit, and motivation.",
+    correct: "human",
+    flag: ["chances"],
+    reason: "The interview decides who moves forward.",
+    explain: "The conversation itself stays with people — this is where trust is built and judgment is applied. AI can transcribe and tidy notes for the interviewer to correct, but the interview is fundamentally human.",
+    tasks: ["Lead the structured interview", "Assess answers against the scorecard", "AI transcribes and tidies notes", "The interviewer corrects the notes and scores"]
+  },
+  {
+    activity: "Check hiring results are fair across groups",
+    context: "Your company has hired 150 people this year. Leadership wants to know: are hiring outcomes fair across gender, ethnicity, and age? Where do candidates drop off?",
+    correct: "create",
+    flag: ["chances"],
+    reason: "The analysis can reveal who was not given a fair chance.",
+    explain: "This is a new task AI creates — most teams couldn't do this analysis before. AI reports compare who moves forward at each step, but a person investigates any gap. The flag is there because the findings affect how future candidates are treated.",
+    tasks: ["Pull demographic data across all hiring stages", "Compare pass-through rates by group", "Flag statistically significant gaps", "A person investigates every gap and decides what to change"]
+  },
+  {
+    activity: "Run background and reference checks",
+    context: "A candidate has accepted in principle. Before the final offer, you need to verify their employment history, run a criminal background check, and collect two references.",
+    correct: "augment",
+    flag: ["chances", "privacy"],
+    reason: "A bad check can cost someone the job, and it uses sensitive personal data.",
+    explain: "Ordering and tracking checks is routine, but reviewing an adverse result is not — the candidate must have a chance to respond. Two flags: chances (a failed check can end the process) and privacy (sensitive personal data).",
+    tasks: ["Order checks through the provider", "Track progress and chase late references", "AI summarises results and flags issues", "A person reviews every adverse finding with the candidate"]
+  },
+  {
+    activity: "Keep candidates updated",
+    context: "You have 30 candidates at various stages. Some haven't heard from you in a week. The hiring manager hasn't given feedback on two shortlists. Candidates are starting to ask what's happening.",
+    correct: "automate",
+    flag: ["chances"],
+    reason: "A status update that says 'rejected' is still a decision about someone's chances.",
+    explain: "Status updates run on rules — this can be automated. But the flag is there because even an automated message can deliver a rejection. The time freed should go to personal calls with finalists and kind, specific feedback.",
+    tasks: ["Send stage-appropriate status emails", "Chase hiring managers for overdue feedback", "Trigger reminders at set intervals", "A recruiter personally calls finalists and writes specific feedback for rejects"]
+  }
+];
+
+var current = -1; // -1 = intro
+var answers = [];
+var app = document.getElementById("app");
+
+function score(pick, correct) {
+  if (pick === correct) return 3;
+  var close = {
+    "human": ["augment"],
+    "augment": ["human", "automate"],
+    "automate": ["augment", "create"],
+    "create": ["automate", "augment"]
+  };
+  if (close[correct] && close[correct].indexOf(pick) >= 0) return 1;
+  return 0;
+}
+
+function labelFor(key) {
+  return { human: "Human-led", augment: "Augment", automate: "Automate", create: "Create" }[key] || key;
+}
+function colorFor(key) {
+  return { human: "var(--human)", augment: "var(--augment)", automate: "var(--automate)", create: "var(--create)" }[key] || "var(--muted)";
+}
+function softFor(key) {
+  return { human: "var(--human-soft)", augment: "var(--augment-soft)", automate: "var(--automate-soft)", create: "var(--create-soft)" }[key] || "var(--surface-2)";
+}
+
+function renderIntro() {
+  app.innerHTML =
+    '<div class="intro">' +
+      '<div class="eyebrow">AI in HR Challenge</div>' +
+      '<h1>How would you use AI in recruiting?</h1>' +
+      '<p>7 real scenarios from a recruiter\'s week. For each one, decide: should this be Human-led, Augmented by AI, Automated, or is it something new AI Creates?</p>' +
+      '<div class="how-grid">' +
+        '<div class="how-item"><div class="emoji">🎯</div><b>Read the scenario</b></div>' +
+        '<div class="how-item"><div class="emoji">🤔</div><b>Pick your call</b></div>' +
+        '<div class="how-item"><div class="emoji">💡</div><b>Learn why</b></div>' +
+        '<div class="how-item"><div class="emoji">📊</div><b>See your score</b></div>' +
+      '</div>' +
+      '<button class="btn btn-start" onclick="next()">Start the challenge</button>' +
+    '</div>';
+}
+
+function renderQuestion() {
+  var s = SCENARIOS[current];
+  var prog = '<div class="prog">';
+  for (var i = 0; i < SCENARIOS.length; i++) {
+    var cls = i < current ? "done" : i === current ? "now" : "";
+    prog += '<span class="' + cls + '"></span>';
+  }
+  prog += '</div>';
+
+  var choices = ["human", "augment", "automate", "create"];
+  var descs = {
+    human: "Keep this with people. AI helps in the background.",
+    augment: "Let AI prepare and a person decide.",
+    automate: "Let a workflow handle it, spot-check results.",
+    create: "AI does most of it. Look for new possibilities."
+  };
+  var choiceHTML = '<div class="choices" id="choices">';
+  for (var c = 0; c < choices.length; c++) {
+    choiceHTML += '<div class="choice" data-pick="' + choices[c] + '" onclick="pick(this)" tabindex="0">' +
+      '<b style="color:' + colorFor(choices[c]) + '">' + labelFor(choices[c]) + '</b>' +
+      '<span>' + descs[choices[c]] + '</span></div>';
+  }
+  choiceHTML += '</div>';
+
+  var taskHTML = '<div style="margin-top:12px;font-size:0.85rem;color:var(--muted)"><b>What this involves:</b><ul style="margin:4px 0 0;padding-left:18px">';
+  for (var t = 0; t < s.tasks.length; t++) {
+    taskHTML += '<li>' + s.tasks[t] + '</li>';
+  }
+  taskHTML += '</ul></div>';
+
+  app.innerHTML = prog +
+    '<div class="card">' +
+      '<div class="eyebrow">Scenario ' + (current + 1) + ' of ' + SCENARIOS.length + '</div>' +
+      '<h2 class="scenario">' + s.activity + '</h2>' +
+      '<p class="context">' + s.context + '</p>' +
+      taskHTML +
+    '</div>' +
+    '<h2 style="margin-bottom:8px">Your call</h2>' +
+    '<p style="color:var(--muted);margin:0 0 12px;font-size:0.92rem">How should this activity work?</p>' +
+    choiceHTML +
+    '<div class="feedback" id="fb"></div>' +
+    '<div id="next-wrap" style="display:none;text-align:right"><button class="btn btn-next" onclick="next()">' +
+      (current < SCENARIOS.length - 1 ? 'Next scenario →' : 'See your score →') + '</button></div>';
+}
+
+function pick(el) {
+  if (el.hasAttribute("disabled")) return;
+  var s = SCENARIOS[current];
+  var choice = el.getAttribute("data-pick");
+  var pts = score(choice, s.correct);
+  answers.push({ scenario: current, pick: choice, correct: s.correct, pts: pts });
+
+  // Disable all choices
+  var allChoices = document.querySelectorAll(".choice");
+  for (var i = 0; i < allChoices.length; i++) {
+    allChoices[i].setAttribute("disabled", "true");
+    allChoices[i].onclick = null;
+    if (allChoices[i].getAttribute("data-pick") === s.correct) {
+      allChoices[i].classList.add("correct");
+    }
+  }
+  if (choice !== s.correct) {
+    el.classList.add("wrong");
+  }
+  el.classList.add("picked");
+
+  // Show feedback
+  var fb = document.getElementById("fb");
+  var fbClass = pts === 3 ? "fb-great" : pts === 1 ? "fb-close" : "fb-miss";
+  var fbTitle = pts === 3 ? "Spot on!" : pts === 1 ? "Close!" : "Not quite";
+  var flagHTML = "";
+  if (s.flag) {
+    flagHTML = '<div class="flag-note">⚠ Affects people: ' + s.flag.join(", ") + ' — ' + s.reason + '</div>';
+  }
+  fb.className = "feedback show " + fbClass;
+  fb.innerHTML = '<h3>' + fbTitle + ' (' + pts + '/3 points)</h3>' +
+    '<p>' + s.explain + '</p>' + flagHTML;
+
+  document.getElementById("next-wrap").style.display = "block";
+}
+
+function next() {
+  current++;
+  if (current >= SCENARIOS.length) {
+    renderScore();
+  } else {
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function renderScore() {
+  var total = 0, perfect = 0, close = 0, miss = 0;
+  for (var i = 0; i < answers.length; i++) {
+    total += answers[i].pts;
+    if (answers[i].pts === 3) perfect++;
+    else if (answers[i].pts === 1) close++;
+    else miss++;
+  }
+  var max = SCENARIOS.length * 3;
+  var pct = Math.round((total / max) * 100);
+
+  var verdict = "";
+  if (pct >= 85) verdict = "You have a strong instinct for where AI helps and where people must stay in charge. You're ready to lead AI adoption in HR.";
+  else if (pct >= 60) verdict = "You've got good judgment on most scenarios. The tricky ones are where the flag-and-cap rule matters most — activities that affect people's chances, pay, or privacy.";
+  else verdict = "AI in HR is new territory for everyone. The key insight: whenever an activity affects someone's chances, pay, or privacy, a person must stay in the loop — even when AI could do the work faster.";
+
+  var prog = '<div class="prog">';
+  for (var i = 0; i < SCENARIOS.length; i++) prog += '<span class="done"></span>';
+  prog += '</div>';
+
+  app.innerHTML = prog +
+    '<div class="card score-card">' +
+      '<div class="eyebrow">Your result</div>' +
+      '<div class="big-score">' + pct + '%</div>' +
+      '<div class="score-label">' + total + ' out of ' + max + ' points</div>' +
+      '<div class="score-breakdown">' +
+        '<div class="sb-item" style="color:var(--augment)"><b>' + perfect + '</b><span>Spot on</span></div>' +
+        '<div class="sb-item" style="color:var(--create)"><b>' + close + '</b><span>Close</span></div>' +
+        '<div class="sb-item" style="color:var(--flag)"><b>' + miss + '</b><span>Missed</span></div>' +
+      '</div>' +
+      '<div class="verdict">' + verdict + '</div>' +
+      '<button class="btn btn-next" onclick="restart()" style="margin-top:12px">Try again</button>' +
+    '</div>' +
+    '<div class="card">' +
+      '<h2>The one rule to remember</h2>' +
+      '<p style="margin:0">If an activity meets any one of three tests — <b>chances</b> (who moves forward), <b>pay</b> (pay or contract terms), or <b>privacy</b> (sensitive personal data) — AI can prepare and suggest, but <b>a person decides</b>. The activity shows as Augment at most.</p>' +
+      '<p style="margin:12px 0 0;color:var(--muted);font-size:0.92rem">This is the flag-and-cap rule. It runs through every process in the HR Work Map.</p>' +
+    '</div>';
+}
+
+function restart() {
+  current = -1;
+  answers = [];
+  renderIntro();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+renderIntro();
+</script>
+</body>
+</html>

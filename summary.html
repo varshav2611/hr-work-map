@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HR at a Glance · HR Work Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>:root{color-scheme:light;padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif;background:#F5F7F9}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="app-warm.css">
+<style>
+.glcount { margin: 6px 0 0; font-weight: 600; color: var(--h2); }
+.gl { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 14px; }
+.glrow { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) auto; gap: 8px 22px; align-items: center; }
+.glrow.none { background: transparent; box-shadow: none; border-style: dashed; color: var(--muted); }
+.glname { margin: 0; font-family: var(--font-display, Georgia, serif); font-size: 1.2rem; font-weight: 700; color: var(--h1); }
+.glname a { color: inherit; text-decoration: none; }
+.glname a:hover { text-decoration: underline; }
+.glsub { margin: 2px 0 0; font-size: 0.833rem; color: var(--muted); }
+.glbars { display: grid; gap: 6px; min-width: 0; }
+.glbr { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 10px; align-items: center; font-size: 0.833rem; color: var(--muted); }
+.glbr .flat { min-height: 24px; }
+.glbr.thin .flat { min-height: 12px; }
+.glpct { text-align: right; line-height: 1; }
+.glpct b { display: block; font-family: var(--font-display, Georgia, serif); font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; color: var(--h1); font-variant-numeric: tabular-nums; }
+.glpct span { font-size: 0.833rem; color: var(--muted); }
+.glchg { margin: 0; font-size: 0.833rem; color: var(--muted); grid-column: 1 / -1; }
+.gltake { margin: 18px 0 0; padding: 14px 18px; background: var(--surface-2); border-radius: 12px; line-height: 1.55; }
+.glkey { display: flex; flex-wrap: wrap; gap: 6px 16px; list-style: none; padding: 0; margin: 16px 0 0; font-size: 0.833rem; }
+.glkey li { display: flex; align-items: center; gap: 6px; }
+@media (max-width: 760px) { .glrow { grid-template-columns: minmax(0, 1fr); } .glpct { text-align: left; } .glpct b { display: inline; margin-right: 8px; } }
+
+.ovgrp { margin: 26px 0 0; }
+.ovgrp h3 { margin: 0; font-family: var(--font-display, Georgia, serif); font-size: 1.2rem; color: var(--h1); }
+.ovgrp > p { margin: 4px 0 0; font-size: 0.9rem; color: var(--muted); max-width: 62ch; }
+.ovlist { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 12px; }
+.ov { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+.ov h4 { margin: 0; font-size: 1rem; color: var(--h1); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.ov h4 span { font-size: 0.833rem; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ov .ovnote { margin: 6px 0 0; font-size: 0.9rem; line-height: 1.5; }
+.ov .ovhome { margin: 8px 0 0; font-size: 0.833rem; font-weight: 600; color: var(--h2); }
+.ov .ovhome span { font-weight: 400; color: var(--muted); }
+.ovchips { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ovchips li { font-size: 0.833rem; border: 1px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 4px 10px; min-width: 0; }
+.ovchips li b { font-weight: 600; color: var(--h1); }
+.ovchips li.home { border-color: var(--h2); }
+.ovchips li i { font-style: normal; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ovsum { margin: 14px 0 0; font-weight: 600; color: var(--h2); }
+
+.tiers { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+.tr { display: grid; grid-template-columns: minmax(8rem, 11rem) minmax(0, 1fr); gap: 4px 16px; align-items: baseline; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--line); border-radius: 12px; padding: 12px 16px; box-shadow: var(--shadow); }
+.tr .tl { font-family: var(--font-display); font-weight: 700; color: var(--h1); display: flex; align-items: center; gap: 8px; }
+.tr .tt { font-weight: 600; color: var(--h2); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.tr .tm { grid-column: 2; color: var(--muted); font-size: 0.9rem; }
+.tr-automate { border-left-color: var(--automate); } .tr-augment { border-left-color: var(--augment); } .tr-human { border-left-color: var(--human); } .tr-create { border-left-color: var(--create); }
+@media (max-width: 560px) { .tr { grid-template-columns: 1fr; } .tr .tm { grid-column: 1; } }
+
+.ovchips li { border-left: 6px solid var(--line); border-radius: 8px; padding: 5px 11px 5px 10px; }
+.ovchips li b { color: inherit; }
+.ovchips li.home { box-shadow: var(--shadow); border-color: transparent; }
+.ovleg { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.78rem; color: var(--muted); }
+.ovleg li { display: flex; align-items: center; gap: 6px; }
+.ovleg i { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+</style>
+</head><body class="tapage">
+<div class="wrap page">
+  <header>
+    <p class="crumb"><a href="index.html">&larr; All processes</a></p>
+    <p class="eyebrow">Across all processes</p>
+    <h1>HR at a glance</h1>
+    <p class="lead">One view across every process you have worked through. Each figure is the share of time with AI involved, so the processes can be compared side by side.</p>
+    <p class="glcount" id="glCount"></p>
+  </header>
+
+  <section aria-labelledby="h-gl">
+    <h2 id="h-gl" class="vlabel">Where AI is involved, by process</h2>
+    <ul class="glkey" aria-label="Colour key"><li><i class="dot human"></i>Human-led</li><li><i class="dot augment"></i>Augment</li><li><i class="dot automate"></i>Automate</li><li><i class="dot create"></i>Create</li></ul>
+    <ol class="gl" id="gl"></ol>
+    <p class="gltake" id="glTake" hidden></p>
+    <details class="fold"><summary>How to read this</summary>
+      <p class="how">The big figure is the share of a process's time with AI involved, which means every task that is not Human-led. The thick bar shows your choices and the thin bar shows our starting view. The same measure is used on every process. Hours are not added up across processes, because each process counts them in its own way, such as per week or per joiner. The numbers come from the choices saved in this browser. A process you have not changed shows our starting view. This is a starting picture to test and discuss, not a measurement of your team.</p>
+    </details>
+  </section>
+
+  <section aria-labelledby="h-tier">
+    <h2 id="h-tier" class="vlabel">Labels and where work is delivered</h2>
+    <p class="lead">Each label also points to where the work should sit in an HR service delivery model. As a task moves from Human-led to Augment to Automate it moves down the tiers, toward self-service. Create opens new services at either end.</p>
+    <ul class="tiers">
+      <li class="tr tr-human"><span class="tl"><i class="dot human"></i>Human-led</span><span class="tt">Tier 2–3 · specialists, CoE &amp; HRBP</span><span class="tm">Keep it with experts and partners.</span></li>
+      <li class="tr tr-augment"><span class="tl"><i class="dot augment"></i>Augment</span><span class="tt">Tier 1–2 · assisted agents &amp; specialists</span><span class="tm">Keep it with people, but AI makes them faster.</span></li>
+      <li class="tr tr-automate"><span class="tl"><i class="dot automate"></i>Automate</span><span class="tt">Tier 0–1 · self-service &amp; automated workflow</span><span class="tm">Push it to a portal or bot; people spot-check.</span></li>
+      <li class="tr tr-create"><span class="tl"><i class="dot create"></i>Create</span><span class="tt">New services · at any tier</span><span class="tm">New self-service experiences, or new strategic advisory.</span></li>
+    </ul>
+    <details class="fold"><summary>Two things to keep in mind</summary><p class="how">Human-led means a person leads, not that the work is senior: a sensitive call at a shared-service desk is human-led but low-tier. And Create is cross-cutting, landing at Tier 0 (a new self-service experience) or Tier 3 (a new CoE capability), so it does not sit on one rung. The labels describe how AI fits a task; the tiers describe where it is delivered. They line up, rather than being the same thing.</p></details>
+  </section>
+
+  <section aria-labelledby="h-ov">
+    <h2 id="h-ov" class="vlabel">Where the processes overlap</h2>
+    <p class="lead">Many activities touch more than one process. This view shows where, and suggests one home for each so the work is not owned twice. The suggested home is a starting point for each process owner to confirm. These overlaps are based on the starting activities, so they do not reflect activities you add or rename. The hours on each process page are not reduced by what is shown here.</p>
+    <p class="ovsum" id="ovSum"></p>
+    <div id="ovBody"></div>
+    <details class="fold"><summary>How to read this</summary>
+      <p class="how">A chip shows the process, the activity and its hours per week in the starting view, or your own hours if you changed them. The outlined chip is the suggested home. Hours in different processes are never added together, because some of the same work appears in more than one place. Three kinds of overlap are shown. Same work in two places needs one owner. A hand-off is work that ends in one process and starts in the next, so the two sides should match. A shared layer is repeated on purpose in every process.</p>
+    </details>
+  </section>
+  <footer class="lifenav"><p class="crumb"><a href="index.html">&larr; All processes</a></p></footer>
+</div>
+<script>
+(function () {
+  try { if ("scrollRestoration" in history) { history.scrollRestoration = "manual"; } } catch (e) {}
+  function pinTop() { try { window.scrollTo(0, 0); } catch (e) {} }
+  pinTop();
+  window.addEventListener("load", pinTop);
+  [50, 150, 300, 600, 1000].forEach(function (ms) { setTimeout(pinTop, ms); });
+  var PROCS = [
+    { slug: "recruitment", name: "Talent Acquisition", file: "data-recruitment.js", scope: "Approved hiring need to accepted offer" },
+    { slug: "onboarding", name: "Onboarding", file: "data-onboarding.js", scope: "Accepted offer to Day 365" },
+    { slug: "learning-development", name: "Learning & Development", file: "data-learning-development.js", scope: "Building skills and helping people grow" },
+    { slug: "performance-management", name: "Performance Management", file: "data-performance-management.js", scope: "Goals, feedback and reviews" },
+    { slug: "total-rewards", name: "Total Rewards", file: "data-total-rewards.js", scope: "Pay, rewards and benefits" },
+    { slug: "hr-operations", name: "HR Operations", file: "data-hr-operations.js", scope: "Records, questions and cases" },
+    { slug: "offboarding", name: "Offboarding", file: "data-offboarding.js", scope: "Notice to handover" },
+    { slug: "legal-compliance", name: "Legal, Risk and Compliance", file: "data-legal-compliance.js", scope: "Rules, relations, risk and responsible AI" },
+    { slug: "hrbp", name: "HR Business Partner", file: "data-hrbp.js", scope: "Partnering with the business, across the lifecycle" }
+  ];
+  var KEYS = ["human", "augment", "automate", "create"], LAB = { human: "Human-led", augment: "Augment", automate: "Automate", create: "Create" };
+  function el(t, c, x) { var e = document.createElement(t); if (c) { e.className = c; } if (x !== undefined) { e.textContent = x; } return e; }
+  function load(src) { return new Promise(function (ok) { var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = ok; document.head.appendChild(s); }); }
+  function roundTo100(vals) {
+    var sum = vals.reduce(function (a, b) { return a + b; }, 0); if (sum <= 0) { return vals.map(function () { return 0; }); }
+    var raw = vals.map(function (v) { return v / sum * 100; }), out = raw.map(Math.floor), left = 100 - out.reduce(function (a, b) { return a + b; }, 0);
+    raw.map(function (r, i) { return { i: i, f: r - Math.floor(r) }; }).sort(function (a, b) { return b.f - a.f; }).slice(0, left).forEach(function (x) { out[x.i]++; });
+    return out;
+  }
+  function readState(store) { try { var r = window.localStorage.getItem(store); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+  function share(P, st) {
+    var H = { human: 0, augment: 0, automate: 0, create: 0 }, n = 0;
+    P.PRESETS.forEach(function (p) {
+      var tk = st && st.tasks && st.tasks[p.n]; var steps = (tk && tk.length) ? tk.map(function (x) { return [x.n, x.m, x.w]; }) : (P.STEPS[p.n] || []); if (!steps.length) { return; }
+      var off = st && st.off && st.off[p.n]; if (off) { return; }
+      var h = st && st.hours && typeof st.hours[p.n] === "number" ? st.hours[p.n] : p.h;
+      var modes = steps.map(function (s, i) { var m = (tk && tk.length) ? s[1] : (st && st.steps && st.steps[p.n] && st.steps[p.n][i]); return KEYS.indexOf(m) >= 0 ? m : s[1]; });
+      var w = steps.map(function (s, i) { var v = (tk && tk.length) ? s[2] : (st && st.weights && st.weights[p.n] && st.weights[p.n][i]); return typeof v === "number" ? v : s[2]; });
+      var tw = w.reduce(function (a, b) { return a + b; }, 0); if (tw <= 0 || h <= 0) { return; }
+      n++; steps.forEach(function (s, i) { H[modes[i]] += h * w[i] / tw; });
+    });
+    if (st && st.customs) { st.customs.forEach(function (c) { var ss = c.steps || []; if (!ss.length || !(c.h > 0)) { return; } n++; ss.forEach(function (s) { if (H[s.m] !== undefined) { H[s.m] += c.h / ss.length; } }); }); }
+    var tot = KEYS.reduce(function (a, k) { return a + H[k]; }, 0);
+    var pc = roundTo100(KEYS.map(function (k) { return H[k]; }));
+    return { H: H, tot: tot, pc: pc, ai: tot > 0 ? 100 - pc[0] : 0, n: n };
+  }
+  function bar(r, thin) {
+    var row = el("div", "glbr" + (thin ? " thin" : "")), f = el("div", "flat" + (thin ? " small" : ""));
+    f.setAttribute("role", "img"); f.setAttribute("aria-label", (thin ? "Our starting view: " : "Your choices: ") + KEYS.map(function (k, i) { return LAB[k] + " " + r.pc[i] + "%"; }).join(", "));
+    KEYS.forEach(function (k, i) { if (r.H[k] > 0) { var pc = r.H[k] / r.tot * 100, sg = el("div", "fseg", !thin && pc >= 9 ? r.pc[i] + "%" : ""); sg.style.width = pc + "%"; sg.style.background = "var(--" + k + ")"; sg.title = LAB[k] + ": " + r.pc[i] + "% of the time"; f.appendChild(sg); } });
+    row.appendChild(el("span", "", thin ? "Our starting view" : "Your choices")); row.appendChild(f); return row;
+  }
+
+  var OV = [
+    { g: "dup", t: "Discipline and grievances", home: "hr-operations", note: "HR Operations runs the case. Legal advises on the rules. Reword Legal's activity as advice so the work is counted once.",
+      a: [["hr-operations", "Manage discipline and grievances"], ["legal-compliance", "Support disciplinary and grievance processes"]] },
+    { g: "dup", t: "Accommodations and leave", home: "hr-operations", note: "HR Operations handles the person's case. Legal covers the law. Total Rewards covers the pay and benefit side of leave.",
+      a: [["hr-operations", "Handle accommodations and sensitive requests"], ["legal-compliance", "Handle accommodations and leave law"], ["total-rewards", "Support leave and life events"]] },
+    { g: "dup", t: "Complaints and concerns", home: "hr-operations", note: "HR Operations handles individual complaints. Legal owns the speak-up channel. Candidate complaints can stay short and point to HR Operations.",
+      a: [["hr-operations", "Handle complaints and concerns"], ["legal-compliance", "Run speak-up and ethics reporting"], ["recruitment", "Handle candidate data requests and complaints"]] },
+    { g: "dup", t: "Records and retention", home: "hr-operations", note: "HR Operations owns the record system and the retention rules. Other processes keep only what is specific to their stage.",
+      a: [["hr-operations", "Keep employee records accurate"], ["hr-operations", "Run audits and manage record retention"], ["legal-compliance", "Keep records and handle retention"], ["legal-compliance", "Prepare for audits and inspections"], ["recruitment", "Manage recruitment records"], ["recruitment", "Run privacy, consent and retention controls"], ["onboarding", "Keep records and compliance evidence"], ["learning-development", "Track completion and keep records"], ["offboarding", "Update systems and records"], ["offboarding", "Protect leavers' data and keep records"]] },
+    { g: "dup", t: "Privacy and data protection", home: "legal-compliance", note: "Legal sets the rules and checks AI use. HR Operations handles the requests. Each process keeps a short task for protecting its own data.",
+      a: [["legal-compliance", "Protect personal data and privacy"], ["hr-operations", "Respond to data and privacy requests"], ["hr-operations", "Protect HR data"], ["total-rewards", "Protect pay data"], ["recruitment", "Handle candidate data requests and complaints"]] },
+    { g: "hand", t: "Offer to joining", note: "Talent Acquisition makes the offer and Total Rewards sets the pay. Onboarding starts once the offer is accepted. Check the pay and joining details match on both sides.",
+      a: [["total-rewards", "Set pay for new hires and offers"], ["recruitment", "Build the offer package and check pay fairness"], ["recruitment", "Make the offer and issue the contract"], ["recruitment", "Manage offer acceptance and joining"], ["onboarding", "Set up payroll and benefits"]] },
+    { g: "hand", t: "Payroll and benefits across the employee's time", note: "Set up at joining, run each month, settled at exit. Total Rewards holds the system. Onboarding and Offboarding use it at the two ends.",
+      a: [["onboarding", "Set up payroll and benefits"], ["onboarding", "Check first pay, benefits and access are right"], ["total-rewards", "Run payroll"], ["total-rewards", "Enrol people in benefits"], ["offboarding", "Settle benefits, leave and insurance"]] },
+    { g: "hand", t: "Feedback, 1:1s and careers", note: "New joiners get feedback in Onboarding, then move to the regular cycle in Performance Management. Career talks continue in Learning and Development.",
+      a: [["onboarding", "Regular 1:1s and feedback"], ["onboarding", "Six-month check-in and career conversation"], ["performance-management", "Collect and share feedback"], ["learning-development", "Career conversations"], ["learning-development", "Leadership assessments and feedback"]] },
+    { g: "hand", t: "Skills", note: "Skills are tested at hiring, tracked in the first year and mapped over time. Learning and Development holds the skills map.",
+      a: [["learning-development", "Build and keep a skills map"], ["learning-development", "Find skills gaps and learning needs"], ["recruitment", "Run skills tests"], ["onboarding", "Track skills and role-training progress"], ["hr-operations", "Build the HR team's skills for new work"]] },
+    { g: "hand", t: "Poor performance to exit", note: "Performance Management starts the conversation. Discipline and legal advice follow, and Offboarding runs the exit. Keep fairness checks consistent across all three.",
+      a: [["performance-management", "Handle poor performance and exits"], ["hr-operations", "Manage discipline and grievances"], ["offboarding", "Plan involuntary exits and layoffs"], ["offboarding", "Keep exits fair and consistent"]] },
+    { g: "hand", t: "Mandatory training", note: "Onboarding covers it in week one. Learning and Development keeps it current afterwards.",
+      a: [["onboarding", "Mandatory compliance and security training"], ["learning-development", "Keep mandatory and compliance training on track"]] },
+    { g: "hand", t: "Answering questions", note: "HR Operations is the front door. The other processes answer questions on their own topic and pass the rest on.",
+      a: [["hr-operations", "Answer employee questions"], ["hr-operations", "Help managers with HR questions"], ["onboarding", "Answer new-joiner questions"], ["total-rewards", "Answer pay and benefits questions"], ["offboarding", "Answer leave and notice period questions"], ["learning-development", "Answer learner questions"], ["recruitment", "Answer candidate questions"], ["legal-compliance", "Advise managers on legal questions"]] },
+    { g: "layer", t: "Explain AI use and ask people how it feels", note: "Repeated on purpose in every process, because the people affected differ. Keep it short in each and share the wording.",
+      a: [["recruitment", "Explain AI use to candidates and handle challenges"], ["onboarding", "Explain AI use to joiners and test the AI tools"], ["learning-development", "Explain AI use to learners and test the AI tools"], ["performance-management", "Explain AI use and ask people how it feels"], ["total-rewards", "Explain AI use and ask people how it feels"], ["hr-operations", "Explain AI use and ask people how it feels"], ["offboarding", "Explain AI use and ask people how it feels"], ["legal-compliance", "Explain AI use and ask people how it feels"]] },
+    { g: "layer", t: "Learn the tools and check AI's work", note: "Repeated on purpose. Legal also owns the deeper fairness and bias check, so process owners need only the day-to-day check.",
+      a: [["recruitment", "Learn the tools and check AI's work"], ["learning-development", "Learn the tools and check AI's work"], ["performance-management", "Learn the tools and check AI's work"], ["total-rewards", "Learn the tools and check AI's work"], ["hr-operations", "Learn the tools and check AI's work"], ["offboarding", "Learn the tools and check AI's work"], ["legal-compliance", "Learn the tools and check AI's work"], ["legal-compliance", "Check AI tools for fairness and bias"]] },
+    { g: "layer", t: "Reporting to leaders", note: "Each process reports on itself. The risk is eight separate reports with different measures. Agree one set of measures and one place to publish them.",
+      a: [["recruitment", "Report to leaders, finance and HR partners"], ["onboarding", "Report on onboarding and improve it"], ["learning-development", "Report learning impact to leaders"], ["performance-management", "Report on performance trends"], ["total-rewards", "Report on cost and trends"], ["hr-operations", "Report HR numbers to leaders"], ["offboarding", "Report on leaving rates"], ["legal-compliance", "Report compliance to leaders"]] }
+  ];
+  var OVG = [
+    ["dup", "Same work in two places", "Pick one home for each, and let the others advise or point to it."],
+    ["hand", "Hand-offs", "Work that ends in one process and starts in the next. Both sides should agree on what is passed over."],
+    ["layer", "Shared layer", "Repeated in every process on purpose. Keep one shared wording and a short local task."]
+  ];
+  var PCOL = {
+    "recruitment": ["#2563eb", "#dbe6fb"],
+    "onboarding": ["#0d9488", "#d2eeea"],
+    "learning-development": ["#7c3aed", "#e7dcfb"],
+    "performance-management": ["#c2410c", "#fbe2d2"],
+    "total-rewards": ["#db2777", "#fbdbe9"],
+    "hr-operations": ["#4f46e5", "#e0ddfb"],
+    "offboarding": ["#b45309", "#f3e4cb"],
+    "legal-compliance": ["#dc2626", "#fbdcdc"]
+  };
+  function renderOverlap() {
+    var by = {}; PROCS.forEach(function (p) { by[p.slug] = p; });
+    function find(slug, name) {
+      var p = by[slug]; if (!p || !p.P) { return null; }
+      var pr = p.P.PRESETS.filter(function (x) { return x.n === name; })[0]; if (!pr) { return null; }
+      var st = readState(p.P.store), h = st && st.hours && typeof st.hours[name] === "number" ? st.hours[name] : pr.h;
+      return { p: p, h: h };
+    }
+    var seen = {}, body = document.getElementById("ovBody"), procs = {};
+    OVG.forEach(function (g) {
+      var items = OV.filter(function (o) { return o.g === g[0]; }); if (!items.length) { return; }
+      var box = el("div", "ovgrp"); box.appendChild(el("h3", "", g[1])); box.appendChild(el("p", "", g[2]));
+      var ul = el("ul", "ovlist");
+      items.forEach(function (o) {
+        var rows = o.a.map(function (r) { return { r: r, f: find(r[0], r[1]) }; }).filter(function (x) { return x.f; });
+        if (rows.length < 2) { return; }
+        var li = el("li", "ov"), h4 = el("h4", "", o.t), names = {};
+        rows.forEach(function (x) { names[x.r[0]] = 1; seen[x.r[0] + "|" + x.r[1]] = 1; procs[x.r[0]] = 1; });
+        h4.appendChild(el("span", "", rows.length + " activities across " + Object.keys(names).length + " processes")); li.appendChild(h4);
+        li.appendChild(el("p", "ovnote", o.note));
+        if (o.home && by[o.home]) { var hp = el("p", "ovhome", "Suggested home: " + by[o.home].name); hp.appendChild(el("span", "", "  \u2014 the others advise or point to it")); li.appendChild(hp); }
+        var ch = el("ul", "ovchips");
+        rows.forEach(function (x) {
+          var isHome = o.home === x.r[0];
+          var c = el("li", isHome ? "home" : ""), b = el("b", "", x.f.p.name + ": "), hrs = el("i", "", "(" + x.f.h + " h)");
+          c.appendChild(b); c.appendChild(document.createTextNode(x.r[1] + " ")); c.appendChild(hrs);
+          var col = PCOL[x.r[0]];
+          if (col) {
+            if (isHome) { c.style.background = col[0]; c.style.color = "#fff"; hrs.style.color = "rgba(255,255,255,0.85)"; c.title = "Suggested home"; }
+            else { c.style.borderLeftColor = col[0]; c.style.background = col[1]; b.style.color = col[0]; }
+          } else if (isHome) { c.title = "Suggested home"; }
+          ch.appendChild(c);
+        });
+        li.appendChild(ch); ul.appendChild(li);
+      });
+      box.appendChild(ul); body.appendChild(box);
+    });
+    document.getElementById("ovSum").textContent = Object.keys(seen).length + " activities sit in an overlap, across " + Object.keys(procs).length + " processes.";
+    var leg = el("ul", "ovleg"); leg.setAttribute("aria-label", "Colour key by process");
+    PROCS.forEach(function (pp) { if (!procs[pp.slug] || !PCOL[pp.slug]) { return; } var li = el("li"); var sw = el("i"); sw.style.background = PCOL[pp.slug][0]; li.appendChild(sw); li.appendChild(document.createTextNode(pp.name)); leg.appendChild(li); });
+    var sumEl = document.getElementById("ovSum"); sumEl.parentNode.insertBefore(leg, sumEl.nextSibling);
+  }
+  var seq = Promise.resolve(), done = [];
+  PROCS.forEach(function (p) {
+    if (!p.file) { return; }
+    seq = seq.then(function () { window.PROCESS = null; return load(p.file); }).then(function () { p.P = window.PROCESS; });
+  });
+  seq.then(function () {
+    var list = document.getElementById("gl"), covered = 0;
+    PROCS.forEach(function (p) {
+      var li = el("li", "glrow");
+      var left = el("div"); var nm = el("p", "glname"), a = el("a", "", p.name); a.href = p.slug + ".html"; nm.appendChild(a); left.appendChild(nm);
+      if (!p.P || !p.P.PRESETS || !p.P.PRESETS.length) {
+        li.classList.add("none"); left.appendChild(el("p", "glsub", p.scope)); li.appendChild(left);
+        var mid = el("div", "", "Not started yet. It will appear here once its activities are added."); li.appendChild(mid); li.appendChild(el("span")); list.appendChild(li); return;
+      }
+      covered++;
+      var st = readState(p.P.store), you = share(p.P, st), start = share(p.P, null);
+      p.you = you; p.start = start;
+      left.appendChild(el("p", "glsub", p.scope + " · " + p.P.PRESETS.length + " activities"));
+      li.appendChild(left);
+      var bars = el("div", "glbars"); bars.appendChild(bar(you, false)); bars.appendChild(bar(start, true)); li.appendChild(bars);
+      var pc = el("div", "glpct"); pc.appendChild(el("b", "", you.ai + "%")); pc.appendChild(el("span", "", "of the time has AI involved")); li.appendChild(pc);
+      var d = you.ai - start.ai;
+      li.appendChild(el("p", "glchg", st ? (d === 0 ? "Your choices match our starting view overall." : "Your choices put AI involvement " + Math.abs(d) + (Math.abs(d) === 1 ? " point " : " points ") + (d > 0 ? "above" : "below") + " our starting view.") : "No changes yet, so this is our starting view."));
+      list.appendChild(li);
+    });
+    document.getElementById("glCount").textContent = covered + " of " + PROCS.length + " processes covered so far";
+    var cov = PROCS.filter(function (p) { return p.you; });
+    if (cov.length >= 2) {
+      var hi = cov.slice().sort(function (a, b) { return b.you.ai - a.you.ai; });
+      var tk = document.getElementById("glTake");
+      var spread = hi[0].you.ai - hi[hi.length - 1].you.ai;
+      tk.textContent = spread < 5 ? "The processes covered so far sit close together, between " + hi[hi.length - 1].you.ai + "% and " + hi[0].you.ai + "% of time with AI involved. A higher share is not better. It shows where to look first, and where people should stay firmly in charge." : "Of the processes covered, " + hi[0].name + " has the most AI involvement (" + hi[0].you.ai + "% of its time) and " + hi[hi.length - 1].name + " the least (" + hi[hi.length - 1].you.ai + "%). A higher share is not better. It shows where to look first, and where people should stay firmly in charge.";
+      tk.hidden = false;
+    }
+    renderOverlap();
+    pinTop();
+  });
+})();
+</script>
+</body></html>
