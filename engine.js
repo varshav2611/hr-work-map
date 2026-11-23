@@ -581,10 +581,16 @@
 
   /* World + terms */
   var wl = $("world");
-  WORLD.forEach(function (w) {
-    var li = el("li"); li.appendChild(document.createTextNode(w.t + " "));
-    var a = el("a", "src", w.s); a.href = w.h; a.target = "_blank"; a.rel = "noopener";
-    li.appendChild(a); wl.appendChild(li);
+  WORLD.forEach(function (g) {
+    var h4 = el("h4", "world-region", g.region);
+    wl.appendChild(h4);
+    var ul = el("ul");
+    g.items.forEach(function (w) {
+      var li = el("li"); li.appendChild(document.createTextNode(w.t + " "));
+      var a = el("a", "src", w.s); a.href = w.h; a.target = "_blank"; a.rel = "noopener";
+      li.appendChild(a); ul.appendChild(li);
+    });
+    wl.appendChild(ul);
   });
   var tg = $("terms");
   TERMS.forEach(function (t) {

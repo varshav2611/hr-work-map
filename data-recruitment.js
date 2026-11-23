@@ -7,12 +7,26 @@
   };
   var SHRM = "https://www.shrm.org/executive-network/insights/real-impact-of-ai-hr-march-2026-en-insights-forum-recap";
   var WORLD = [
-    { t: "Recruiting leads HR's use of AI. 27% of organisations use AI in talent acquisition, and 7 of the top 10 HR AI uses are in recruiting.", s: "SHRM, Mar 2026", h: SHRM },
-    { t: "A US court case is testing AI screening. In Mobley v. Workday, a federal judge ruled on 22 June 2026 that several discrimination claims can go ahead for now. This is an early ruling on whether the case continues, not a finding that anyone did anything wrong.", s: "Duane Morris", h: "https://blogs.duanemorris.com/classactiondefense/2026/06/24/california-federal-court-grants-in-part-and-denies-in-part-workdays-motion-to-dismiss-in-mobley-v-workday/" },
-    { t: "A second case, Kistler v. Eightfold AI (filed January 2026), challenges how applicants were scored by AI and how openly they were told. It is at an early stage, and Eightfold denies the claims.", s: "Jones Walker", h: "https://www.joneswalker.com/en/insights/blogs/ai-law-blog/ai-hiring-under-fire-what-the-eightfold-lawsuit-means-for-every-employer-using-a.html?id=102mkj" },
-    { t: "Applicants use AI too. Gartner surveys found 39% of candidates used AI in their applications, and 6% admitted to some form of interview fraud, such as having someone else take part for them. Checking that a candidate is real is becoming part of the job.", s: "Gartner, via SHRM", h: "https://www.shrm.org/in/topics-tools/news/blogs/fraudulent-candidates-ai-generated-applications-breaking-recruitment" },
-    { t: "EU rules for AI used in hiring now apply from 2 December 2027, after the EU formally agreed a delay in July 2026.", s: "National Law Review", h: "https://natlawreview.com/article/eu-digital-omnibus-ai-enters-force" },
-    { t: "Rules are behind the tools. Fewer than half of organisations have a written AI policy.", s: "SHRM, Mar 2026", h: SHRM }
+    { region: "Global", items: [
+      { t: "Recruiting leads HR's use of AI. 27% of organisations use AI in talent acquisition, and 7 of the top 10 HR AI uses are in recruiting.", s: "SHRM, Mar 2026", h: SHRM },
+      { t: "Applicants use AI too. Gartner surveys found 39% of candidates used AI in their applications, and 6% admitted to some form of interview fraud, such as having someone else take part for them. Checking that a candidate is real is becoming part of the job.", s: "Gartner, via SHRM", h: "https://www.shrm.org/in/topics-tools/news/blogs/fraudulent-candidates-ai-generated-applications-breaking-recruitment" },
+      { t: "Rules are behind the tools. Fewer than half of organisations have a written AI policy.", s: "SHRM, Mar 2026", h: SHRM }
+    ]},
+    { region: "Americas", items: [
+      { t: "US court cases are testing AI screening. In Mobley v. Workday, a federal judge ruled on 22 June 2026 that several discrimination claims can go ahead. A second case, Kistler v. Eightfold AI (filed January 2026), challenges how applicants were scored. Both are at early stages.", s: "Duane Morris / Jones Walker", h: "https://blogs.duanemorris.com/classactiondefense/2026/06/24/california-federal-court-grants-in-part-and-denies-in-part-workdays-motion-to-dismiss-in-mobley-v-workday/" },
+      { t: "US states are writing their own AI hiring rules. Illinois, Texas and California now have laws that apply civil rights standards to AI used in hiring. Colorado requires risk management for certain AI systems by mid 2026.", s: "SHRM, 2026", h: "https://shrm.org/advocacy/new-year-brings-new-ai-regulations-for-hr" },
+      { t: "In Latin America, AI adoption in recruitment is growing fastest among startups and in finance and retail. Vendors report hiring time cuts of up to 60%, though independent studies are still few.", s: "Bloomberg Linea", h: "https://www.bloomberglinea.com/negocios/un-algoritmo-decidira-si-eres-apto-para-el-empleo-ia-redefine-contratacion-en-latinoamerica/" }
+    ]},
+    { region: "EMEA", items: [
+      { t: "EU rules for AI used in hiring now apply from 2 December 2027, after the EU formally agreed a delay in July 2026. AI for recruitment, screening, promotion and dismissal is classed as high risk.", s: "National Law Review", h: "https://natlawreview.com/article/eu-digital-omnibus-ai-enters-force" },
+      { t: "EMEA HR leaders are the most enthusiastic about AI of any region (44% excited to use it), but 48% have not started using AI with their teams.", s: "Workday, 2026", h: "https://blog.workday.com/en-gb/global-study-emea-sets-itself-apart-on-ai-adoption.html" },
+      { t: "56% of EMEA CEOs say their organisation is ready for AI, the highest of any region surveyed, but 60% say their data is still siloed, which limits what AI tools can do.", s: "Workday, 2026", h: "https://blog.workday.com/en-gb/global-study-emea-sets-itself-apart-on-ai-adoption.html" }
+    ]},
+    { region: "APAC", items: [
+      { t: "74% of APAC organisations have piloted or deployed AI, 1 point above the global rate. But only 21% say they can recruit and retain enough people with AI skills.", s: "Aon, Jul 2026", h: "https://www.aon.com/apac/in-the-press/asia-newsroom/2026/apac-leads-in-ai-adoption-but-lags-in-workforce-readiness-aon-study-finds" },
+      { t: "In India, 81% of recruiters say AI has already changed how their organisation hires, and 80% plan to expand AI use for screening. In Singapore the figure is 79%, and in Australia 75%.", s: "LinkedIn, Feb 2026", h: "https://techwireasia.com/2026/02/linkedin-research-shows-ai-becoming-standard-in-recruitment/" },
+      { t: "India's data protection rules (DPDP Act) take full effect from 13 May 2027. Employers must review what candidate data they collect, set retention limits, and prepare notices and deletion processes.", s: "Fisher Phillips", h: "https://www.fisherphillips.com/en/news-insights/indias-new-data-privacy-rules-are-here.html" }
+    ]}
   ];
   var PRESETS = [
     { n: "Write job postings", st: "Open role", h: 1.25, t: "use", s: false, th: "AI drafts from the manager's notes and checks wording for jargon and bias. A person approves what goes live.",
