@@ -486,7 +486,7 @@
 
   /* Totals and verdict */
   function bandText(total, ai, autoH, anyLeft) {
-    if (total <= 0) { return anyLeft ? "Every activity is ignored. Count at least one activity to see the verdict." : "Add some hours to see the verdict."; }
+    if (total <= 0) { return anyLeft ? "Every activity is ignored. Count at least one activity to see the working hypothesis." : "Add some hours to see the working hypothesis."; }
     if (ai <= 0) { return "With your choices, no time is given to AI."; }
     var pct = ai / total * 100, ap = autoH / total * 100;
     if (ap >= 40) { return "Heavy automation. Make sure a person checks the results."; }
@@ -509,7 +509,7 @@
     });
     var ai = autoH + augH + creH;
     var pct = total > 0 ? ai / total * 100 : 0;
-    if (typeof addSum !== "undefined") { var tt = 0, aa = 0; lv.forEach(function (x) { tt += x.h; aa += x.h * (x.v || 0) / 100; }); addSum.textContent = (UNIT.whole || "Your whole week now:") + " " + fmt(aa) + " of " + fmtH(tt) + " h with AI involved (" + (tt > 0 ? Math.round(aa / tt * 100) : 0) + "%). Your own activities are included."; }
+    if (typeof addSum !== "undefined") { var tt = 0, aa = 0; lv.forEach(function (x) { tt += x.h; aa += x.h * (x.v || 0) / 100; }); addSum.textContent = (UNIT.whole || "Your whole week now:") + " " + fmt(aa) + " of " + fmtH(tt) + " h where AI plays a role (" + (tt > 0 ? Math.round(aa / tt * 100) : 0) + "%). Your own activities are included."; }
     if (typeof updateStages === "function") { updateStages(); }
     if (typeof ownCols !== "undefined") { ownCols.hidden = ownCount() === 0; }
 
@@ -535,10 +535,10 @@
     $("hN").textContent = Math.round(pct) + "%"; $("hHrs").textContent = "about " + fmt(ai) + " of " + fmtH(total) + " " + (UNIT.phrase || "hours a week");
     var vt = $("vTop"); vt.textContent = "";
     var srs = el("span", "sr", fmt(ai) + " of " + fmtH(total) + " "); vt.appendChild(srs);
-    vt.appendChild(document.createTextNode("AI is involved in this share of the time, as automation, as a helper or as new work."));
+    vt.appendChild(document.createTextNode("AI plays a role in this share of the time. This is involvement, not time saved. Actual impact depends on your organisation."));
     $("vBand").textContent = bandText(total, ai, autoH, offN > 0);
     $("vSub").textContent = total > 0
-      ? "This is time with AI involved, not time saved. Checking AI's work takes time too. The hours are starting guesses, so replace them with your own."
+      ? "This shows where AI plays a role, not how much time is saved. Oversight, corrections and learning new tools all take real time. These hours are starting guesses to test with your team."
       : "Add some hours to see the calculation.";
     var dn = $("dNote"); if (dn) { var hasD = items.indexOf(draft) >= 0; dn.hidden = !hasD; dn.textContent = hasD ? "These numbers include the activity you are adding, which is not added yet. Click Add activity to keep it." : ""; }
     var rn = $("riskNote"); if (rn) { var showR = total > 0 && riskH >= 0.05; rn.hidden = !showR; rn.textContent = showR ? fmt(riskH) + " h of the automated or new work is on activities that affect people's chances, pay or privacy. A person must check these before they take effect." : ""; }
@@ -684,7 +684,7 @@
     return out;
   }
   function buildRows() {
-    var head = ["Stage", "Activity", "Task", "Activity hours " + PW + " (shown once per activity)", "Weight (%)", "Task hours " + PW, "Human-led", "Augment", "Automate", "Create", "Counted in verdict", "Our starting view"];
+    var head = ["Stage", "Activity", "Task", "Activity hours " + PW + " (shown once per activity)", "Weight (%)", "Task hours " + PW, "Human-led", "Augment", "Automate", "Create", "Counted in working hypothesis", "Our starting view"];
     var rows = [head];
     items.forEach(function (it) {
       if (it.draft) { return; }
@@ -730,7 +730,7 @@
     });
     sum.push(["Total", { t: "n", v: tH, f: "SUM(B2:B5)", z: "0.00" }, { t: "n", v: tH > 0 ? 1 : 0, f: "SUM(C2:C5)", z: "0%" }, { t: "n", v: tC, f: "SUM(D2:D5)" }, { t: "n", v: tC > 0 ? 1 : 0, f: "SUM(E2:E5)", z: "0%" }]);
     sum.push([]);
-    sum.push(["Hours weight each task by its share of the activity's time. This is what the verdict uses. Task counts treat every task equally. Ignored activities are left out."]);
+    sum.push(["Hours weight each task by its share of the activity's time. This is what the working hypothesis uses. Task counts treat every task equally. Ignored activities are left out."]);
     var sws = X.utils.aoa_to_sheet(sum);
     sws["!cols"] = [{ wch: 14 }, { wch: 20 }, { wch: 12 }, { wch: 16 }, { wch: 12 }];
     var wb = X.utils.book_new();
@@ -935,7 +935,7 @@
     var after = wk(), nm = nameIn.value.trim();
     nameIn.value = ""; stkIn.checked = false; touched = false; resetSteps(); previewAdd(); own.det.open = true;
     addDone.hidden = false;
-    addDone.textContent = "Added \u201c" + nm + "\u201d. It is now in your verdict. Before: " + fmt(before.a) + " of " + fmt(before.t) + " h with AI involved (" + (before.t > 0 ? Math.round(before.a / before.t * 100) : 0) + "%). Now: " + fmt(after.a) + " of " + fmt(after.t) + " h (" + (after.t > 0 ? Math.round(after.a / after.t * 100) : 0) + "%).";
+    addDone.textContent = "Added \u201c" + nm + "\u201d. It is now in your working hypothesis. Before: " + fmt(before.a) + " of " + fmt(before.t) + " h where AI plays a role (" + (before.t > 0 ? Math.round(before.a / before.t * 100) : 0) + "%). Now: " + fmt(after.a) + " of " + fmt(after.t) + " h (" + (after.t > 0 ? Math.round(after.a / after.t * 100) : 0) + "%).";
     var hero = document.querySelector(".hero"); if (hero) { hero.classList.remove("pulse"); void hero.offsetWidth; hero.classList.add("pulse"); }
   });
   function applyState(st) {
