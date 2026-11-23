@@ -581,16 +581,23 @@
 
   /* World + terms */
   var wl = $("world");
+  function addWorldItem(w, parent) {
+    var li = el("li"); li.appendChild(document.createTextNode(w.t + " "));
+    if (w.h) { var a = el("a", "src", w.s); a.href = w.h; a.target = "_blank"; a.rel = "noopener"; li.appendChild(a); }
+    else { li.appendChild(document.createTextNode("(" + w.s + ")")); }
+    parent.appendChild(li);
+  }
   WORLD.forEach(function (g) {
-    var h4 = el("h4", "world-region", g.region);
-    wl.appendChild(h4);
-    var ul = el("ul");
-    g.items.forEach(function (w) {
-      var li = el("li"); li.appendChild(document.createTextNode(w.t + " "));
-      var a = el("a", "src", w.s); a.href = w.h; a.target = "_blank"; a.rel = "noopener";
-      li.appendChild(a); ul.appendChild(li);
-    });
-    wl.appendChild(ul);
+    if (g.region) {
+      var h4 = el("h4", "world-region", g.region);
+      wl.appendChild(h4);
+      var ul = el("ul");
+      g.items.forEach(function (w) { addWorldItem(w, ul); });
+      wl.appendChild(ul);
+    } else {
+      if (!wl._flatUl) { wl._flatUl = el("ul"); wl.appendChild(wl._flatUl); }
+      addWorldItem(g, wl._flatUl);
+    }
   });
   var tg = $("terms");
   TERMS.forEach(function (t) {
