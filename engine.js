@@ -59,7 +59,7 @@
   function playersBlock(g, r) {
     if ((!g || !g.length) && (!r || !r.length)) { return null; }
     var box = el("div", "plist");
-    [["Global HR tech", g], ["India-based HR tech", r]].forEach(function (p) {
+    [["Global HR tech", g], ["Regional HR tech", r]].forEach(function (p) {
       if (!p[1] || !p[1].length) { return; }
       var w = el("div");
       w.appendChild(el("div", "k", p[0]));
@@ -626,7 +626,7 @@
       names.forEach(function (name) {
         var o = ORGS[name];
         var li = el("li", "org");
-        var h = el("div"); h.appendChild(el("b", "", name)); h.appendChild(el("span", "rg", o[0] === "Global" ? "Global" : "India"));
+        var h = el("div"); h.appendChild(el("b", "", name)); h.appendChild(el("span", "rg", o[0]));
         li.appendChild(h);
         li.appendChild(el("span", "kf", o[1]));
         li.appendChild(el("span", "tk", "Used for: " + orgMap[name].join(", ")));
