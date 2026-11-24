@@ -404,12 +404,14 @@
     });
     function bar(box, o, t) {
       var pcs = roundTo100(keys.map(function (k) { return o[k]; }));
-      keys.forEach(function (k, i) { if (o[k] > 0) { var pc = o[k] / t * 100, sg = el("div", "fseg", pc >= 8 ? pcs[i] + "%" : ""); sg.style.width = pc + "%"; sg.style.background = "var(--" + k + ")"; sg.title = LABEL[k] + ": " + Math.round(pc) + "% of the time"; box.appendChild(sg); } });
+      keys.forEach(function (k, i) { if (o[k] > 0) { var pc = o[k] / t * 100, sg = el("div", "fseg", pcs[i] + "%"); sg.style.width = pc + "%"; sg.style.background = "var(--" + k + ")"; sg.title = LABEL[k] + ": " + Math.round(pc) + "% of the time"; box.appendChild(sg); } });
     }
-    bar(you, y, yt); bar(rec, r, rt);
+    bar(you, y, yt);
+    var recRow = rec.parentNode;
+    var gaps = 0; keys.forEach(function (k) { if (Math.abs(r[k] - y[k]) >= 0.05) { gaps++; } });
+    if (gaps) { recRow.hidden = false; bar(rec, r, rt); } else { recRow.hidden = true; }
     if (!ul) { return; }
     function top(a, n) { return a.slice().sort(function (p, q) { return q.h - p.h; }).slice(0, n).map(function (x) { return x.n; }).join(" · "); }
-    var gaps = 0; keys.forEach(function (k) { if (Math.abs(r[k] - y[k]) >= 0.05) { gaps++; } });
     if (!gaps) { ul.appendChild(el("li", "advok", "Your choices match our advice overall.")); return; }
     keys.forEach(function (k) {
       if (Math.abs(r[k] - y[k]) < 0.05) { return; }
