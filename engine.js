@@ -404,7 +404,7 @@
     });
     function bar(box, o, t) {
       var pcs = roundTo100(keys.map(function (k) { return o[k]; }));
-      keys.forEach(function (k, i) { if (o[k] > 0) { var pc = o[k] / t * 100, sg = el("div", "fseg", pcs[i] + "%"); sg.style.width = pc + "%"; sg.style.background = "var(--" + k + ")"; sg.title = LABEL[k] + ": " + Math.round(pc) + "% of the time"; box.appendChild(sg); } });
+      keys.forEach(function (k, i) { if (o[k] > 0) { var pc = o[k] / t * 100, sg = el("div", "fseg", pcs[i] + "%"); sg.style.width = pc + "%"; sg.style.background = "var(--" + k + ")"; sg.title = LABEL[k] + ": " + pcs[i] + "% of the time"; box.appendChild(sg); } });
     }
     bar(you, y, yt);
     bar(rec, r, rt);
