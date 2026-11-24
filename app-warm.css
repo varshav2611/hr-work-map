@@ -20,7 +20,7 @@
   --own: #4D7A1C;
   --own-soft: #EAF3DC;
   --own-ink: #FFFFFF;
-  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
   --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark) {

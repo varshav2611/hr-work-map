@@ -180,8 +180,7 @@
       pop.addEventListener("click", function (ev) { ev.stopPropagation(); });
       pop.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { closeP(); fx.focus(); } });
       fx.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { closeP(); } });
-      document.addEventListener("click", closeP);
-      document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !pop.hidden) { closeP(); } });
+      /* Delegated handler added once outside buildRow — see below */
       name.appendChild(fx); row.appendChild(pop);
     }
     if (!it.custom) { leave = el("button", "leave", "Ignore it"); leave.type = "button"; name.appendChild(leave); }
@@ -773,6 +772,18 @@
     catch (e) { setNote(dbDoc ? "Saving…" : "Not saved. This browser blocks storage."); }
     if (dbDoc) { clearTimeout(dbTimer); dbTimer = setTimeout(flushDb, 800); }
   }
+
+  /* Single delegated handler for closing affects-people popups */
+  document.addEventListener("click", function () {
+    Array.prototype.forEach.call(document.querySelectorAll(".afpop"), function (x) { x.hidden = true; });
+    Array.prototype.forEach.call(document.querySelectorAll(".afx"), function (x) { x.setAttribute("aria-expanded", "false"); });
+  });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape") {
+      Array.prototype.forEach.call(document.querySelectorAll(".afpop:not([hidden])"), function (x) { x.hidden = true; });
+      Array.prototype.forEach.call(document.querySelectorAll(".afx[aria-expanded='true']"), function (x) { x.setAttribute("aria-expanded", "false"); });
+    }
+  });
 
   /* Build the list */
   var list = $("list");
