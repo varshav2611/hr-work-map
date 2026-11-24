@@ -407,7 +407,9 @@
       keys.forEach(function (k, i) { if (o[k] > 0) { var pc = o[k] / t * 100, sg = el("div", "fseg", pcs[i] + "%"); sg.style.width = pc + "%"; sg.style.background = "var(--" + k + ")"; sg.title = LABEL[k] + ": " + pcs[i] + "% of the time"; box.appendChild(sg); } });
     }
     bar(you, y, yt);
+    you.setAttribute("aria-label", "Your choices: " + keys.map(function (k, i) { var pcs = roundTo100(keys.map(function (k2) { return y[k2]; })); return LABEL[k] + " " + pcs[i] + "%"; }).join(", "));
     bar(rec, r, rt);
+    rec.setAttribute("aria-label", "Our starting view: " + keys.map(function (k, i) { var pcs = roundTo100(keys.map(function (k2) { return r[k2]; })); return LABEL[k] + " " + pcs[i] + "%"; }).join(", "));
     var gaps = 0; keys.forEach(function (k) { if (Math.abs(r[k] - y[k]) >= 0.05) { gaps++; } });
     if (!ul) { return; }
     function top(a, n) { return a.slice().sort(function (p, q) { return q.h - p.h; }).slice(0, n).map(function (x) { return x.n; }).join(" · "); }
