@@ -260,7 +260,7 @@
       covered++;
       var st = readState(p.P.store), you = share(p.P, st), start = share(p.P, null);
       p.you = you; p.start = start;
-      left.appendChild(el("p", "glsub", p.scope + " · " + p.P.PRESETS.length + " activities"));
+      left.appendChild(el("p", "glsub", p.scope + " · " + p.P.PRESETS.length + " tasks"));
       li.appendChild(left);
       var bars = el("div", "glbars"); bars.appendChild(bar(you, false)); bars.appendChild(bar(start, true)); li.appendChild(bars);
       var pc = el("div", "glpct"); pc.appendChild(el("b", "", you.ai + "%")); pc.appendChild(el("span", "", "of the time has AI involved")); li.appendChild(pc);
