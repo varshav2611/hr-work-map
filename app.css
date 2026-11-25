@@ -535,7 +535,8 @@ a.proc:hover { border-color: var(--accent); }
 
 .xrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 4px 0 8px; }
 .xbtn { font: inherit; font-weight: 600; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--accent); background: var(--surface); color: var(--accent); cursor: pointer; }
-.xbtn:hover { background: var(--accent); color: var(--accent-ink); }
+.xbtn:hover:not(:disabled) { background: var(--accent); color: var(--accent-ink); }
+.xbtn:disabled { opacity: 0.5; cursor: not-allowed; border-color: var(--muted); color: var(--muted); }
 .xnote { color: var(--muted); font-size: 0.9rem; }
 
 .sb.sug:not([aria-pressed="true"]) { border-radius: 5px; border: 2px solid var(--ink); font-weight: 700; color: var(--ink); padding: 1px 9px; }

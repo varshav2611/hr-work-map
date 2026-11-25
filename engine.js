@@ -768,7 +768,7 @@
       btn.addEventListener("click", function () { exportXlsx(dl, note); });
     }, function () {});
   }
-  initExport();
+  /* initExport(); — download locked for now */
   function persist() {
     var st = collectState();
     try { window.localStorage.setItem(STORE, JSON.stringify(st)); setNote(dbDoc ? "Saving…" : "Saved in this browser."); }
